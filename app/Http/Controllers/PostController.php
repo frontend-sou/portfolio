@@ -3,49 +3,57 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
+use Inertia\Inertia;
+use Inertia\Response;
+use Faker\Guesser\Name;
 use Illuminate\Support\Facades\Auth;
-use PhpParser\Node\Expr\PostDec;
 
 class PostController extends Controller
 {
     /**
-     * postの一覧表示
+     * Display a listing of the resource.
      */
+
+    // 投稿一覧ページにユーザーの投稿を参照
     public function index()
     {
-        return view('post.index');
+        $users = User::all();
+        return Inertia::render('Posts/Index',[
+            'users'=>$users
+        ]);
     }
 
     /**
-     * postの新規作成
+     * Show the form for creating a new resource.
      */
     public function create()
     {
-        return view('post.create');
+        //
     }
 
     /**
-     * postの登録
+     * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        $id = Auth::id();
+        // 
     }
 
     /**
-     * postの詳細表示
+     * Display the specified resource.
      */
     public function show(string $id)
     {
-        return view('post.show');
+        //
     }
 
     /**
-     * postの編集
+     * Show the form for editing the specified resource.
      */
     public function edit(string $id)
     {
-        return view('post.edit');
+        //
     }
 
     /**
@@ -57,7 +65,7 @@ class PostController extends Controller
     }
 
     /**
-     * postの削除
+     * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
