@@ -18,18 +18,24 @@ class PostController extends Controller
         return Inertia::render('Posts/Create');
     }
 
-    // 投稿情報を保存
+    // 投稿情報の保存処理。ここではstoreメソッドでリクエスト処理が集中しているためモデルでなくコントローラーに処理集中させる
     public function store(Request $request)
     {
         // リクエストのバリデーション指定。リクエストの処理を別ファイルに分けるのもあり
         $request->validate([
             'title' => 'required|string|max:50',
             'content' => 'required|string',
-            'image_path' => 'nullable|string|max:255',
+            'image' => 'nullable|image|max:10240',
         ]);
+        // リクエストデータからtitle,contentのみ抽出
+        $data = $request->only('title', 'content');
+        if ($request->hasFile('image')) {
+            // ファイルを取得しS3に保存。第一引数'posts'はS3上の保存先ディレクトリを指定しており、第二引数's3'はファイルシステムのディスク名
+            $imagePath = $request->file('image')->store('posts', 's3');
+            $data['image_path'] = Storage::disk('s3')->url($imagePath);
+        }
 
-        // PostモデルのcreatePostメソッド発動
-        Post::createPost($request->all());
+        Post::createPost($data);
 
         return Redirect::route('posts.index');
     }

@@ -18,7 +18,7 @@ class Post extends Model
         // Eloquentモデルのcreateメソッド呼び出し
         return self::create([
             'user_id' => auth()->id(),
-            //左辺の''はテーブルのカラム値、右辺はフォームからのフィールド値
+            // 左辺の''はテーブルのカラム値、右辺はフォームからのフィールド値
             'title' => $data['title'],
             'content' => $data['content'],
             'image_path' => $data['image_path'] ?? null,
