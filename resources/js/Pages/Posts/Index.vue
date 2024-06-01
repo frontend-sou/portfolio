@@ -15,7 +15,8 @@ defineProps({
     <ul class="space-y-6">
       <li v-for="post in posts" :key="post.id" class="p-4 bg-white rounded-lg shadow-md">
         <h2 class="text-2xl font-semibold mb-2">タイトル：{{ post.title }}</h2>
-        <p class="mb-2">本文：{{ post.content }}</p>
+        <!-- <p class="mb-2">本文：{{ post.content }}</p> -->
+        <img v-if="post.image_path" :src="post.image_path" alt="Post Image" class="mb-2">
         <p v-if="post.image_path" class="text-gray-500">画像パス：{{ post.image_path }}</p>
       </li>
     </ul>

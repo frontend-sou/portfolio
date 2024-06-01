@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Post extends Model
 {
@@ -17,7 +18,7 @@ class Post extends Model
     {
         // Eloquentモデルのcreateメソッド呼び出し
         return self::create([
-            'user_id' => auth()->id(),
+            'user_id' => Auth::id(),
             // 左辺の''はテーブルのカラム値、右辺はフォームからのフィールド値
             'title' => $data['title'],
             'content' => $data['content'],
