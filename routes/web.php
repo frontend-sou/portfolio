@@ -27,7 +27,7 @@ Route::middleware('auth')->group(function () {
     
     Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
     Route::get('/posts/index', [PostController::class, 'index'])->name('posts.index');
-    Route::get('/posts/show', [PostController::class, 'show'])->name('posts.show');
+    Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
     // Create.vueは/posts/indexにPOSTリクエストしているから変更必須？
     Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
 });
