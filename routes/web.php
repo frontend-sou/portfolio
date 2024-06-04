@@ -25,11 +25,8 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     
-    Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
-    Route::get('/posts/index', [PostController::class, 'index'])->name('posts.index');
-    Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
-    // Create.vueは/posts/indexにPOSTリクエストしているから変更必須？
-    Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
+    // PostControllerのメソッドとルーティングをRoute::resource一つで紐づけ
+    Route::resource('posts', PostController::class);
 });
 
 require __DIR__.'/auth.php';

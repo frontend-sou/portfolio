@@ -13,6 +13,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Faker\Guesser\Name;
 use Illuminate\Support\Arr;
+use PhpParser\Node\Stmt\Return_;
 
 class PostController extends Controller
 {
@@ -33,7 +34,7 @@ class PostController extends Controller
             // ファイルを取得しS3に保存。第一引数'posts'はS3上の保存先ディレクトリを指定しており、第二引数's3'はファイルシステムのディスク名
             try {
                 $imagePath = $request->file('image')->store('posts', 's3');
-                $url = Storage::disk('s3')->url($imagePath); // 修正: $urlの使い方
+                $url = Storage::disk('s3')->getVisibility($imagePath); // getVisibilityをなぜ使ったのか
                 $data['image_path'] = $url;
             } catch (\Exception $e) {
                 return back()->withErrors(['image' => '画像のアップロードに失敗しました: ' . $e->getMessage()]);
@@ -58,6 +59,7 @@ class PostController extends Controller
      */
     public function show(string $id)
     {
+        // findOrFailでデータが見つからないとき404httpレスポンスを返す
         $post = Post::findOrFail($id);
         return Inertia::render('Posts/Show', ['post' => $post]);
     }
@@ -67,7 +69,8 @@ class PostController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $post = Post::findOrFail($id);
+        return Inertia::render('Posts/Edit',['post' => $post]);
     }
 
     /**
@@ -83,6 +86,9 @@ class PostController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $post = Post::findOrFail($id);
+        $post->delete();
+
+        return Redirect::route('posts.index');
     }
 }

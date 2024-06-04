@@ -24,7 +24,6 @@ function submit() {
   <div>
     <h1>新規投稿</h1>
     <form @submit.prevent="submit">
-      @csrf
       <div>
         <label for="title">タイトル</label>
         <!-- v-modelで入力値を同期的に使用 -->

@@ -1,12 +1,20 @@
 <script setup>
-import { Head } from '@inertiajs/vue3';
+import { Head ,Link ,useForm} from '@inertiajs/vue3';
 
 defineProps({
     post:{
-        type:Object,
-        required:true,
+        type: Object,
+        required: true,
     },
 });
+
+// const form = useForm();
+
+const handleDelete = () => {
+    if (confirm('本当に削除しますか？')) {
+        form.destroy(route('posts.destroy', post.id));
+    }
+};
 
 </script>
 
@@ -16,8 +24,12 @@ defineProps({
         <h1 class="text-3xl font-bold mb-7">投稿詳細</h1>
         <div class="p-4 bg-white rounded-lg shadow-md">
             <h2 class="text-2xl font-semibold mb-2">タイトル：{{ post.title }}</h2>
-            <p class="mb-2">本文：{{ post.content }}</p>
+            <h1 class="mb-2">本文：{{ post.content }}</h1>
             <img v-if="post.image_path" :src="post.image_path" alt="Post Image" class="mb-2">
+        </div>
+        <div class="mx-auto p-5 flex items-center justify-center">
+            <Link :href="route('posts.edit',post.id)" class="m-5 p-2 shadow-md rounded-lg bg-blue-500 text-white">編集</Link>
+            <button class="m-5 p-2 shadow-md rounded-lg bg-red-500 text-white" type="button" @click="handleDelete">削除</button>
         </div>
     </div>
 </template>
