@@ -17,12 +17,15 @@ use PhpParser\Node\Stmt\Return_;
 
 class PostController extends Controller
 {
+    // 画像イメージを保存するフォルダをクラス内定義
+    protected $diskImageFolder = 'posts';
+
     public function create()
     {
         return Inertia::render('Posts/Create');
     }
 
-    // 投稿情報の保存処理。ここではstoreメソッドでリクエスト処理が集中しているためモデルでなくコントローラーに処理集中させる
+    // 投稿情報の保存処理
     public function store(StorePostRequest $request)
     {
         // リクエストのバリデーション済みデータを取得
@@ -33,8 +36,8 @@ class PostController extends Controller
         if ($request->hasFile('image')) {
             // ファイルを取得しS3に保存。第一引数'posts'はS3上の保存先ディレクトリを指定しており、第二引数's3'はファイルシステムのディスク名
             try {
-                $imagePath = $request->file('image')->store('posts', 's3');
-                $url = Storage::disk('s3')->getVisibility($imagePath); // getVisibilityをなぜ使ったのか
+                $imagePath = $request->file('image')->store($this->diskImageFolder, 's3');
+                $url = Storage::disk('s3')->url($imagePath); // urlでいいの？
                 $data['image_path'] = $url;
             } catch (\Exception $e) {
                 return back()->withErrors(['image' => '画像のアップロードに失敗しました: ' . $e->getMessage()]);
@@ -89,11 +92,10 @@ class PostController extends Controller
         $post = Post::findOrFail($id);
         // 画像パスが存在する場合、S3から削除
         if ($post->image_path) {
-            $path = parse_url($post->image_path, PHP_URL_PATH); //フルパスからhttps://s3.ap-northeast-1.amazonaws.com以後を取得
-            // Storage::disk('s3')->delete($path);
-            dd($path);
+            $image = basename($post->image_path);
+            Storage::disk('s3')->delete($this->diskImageFolder.'/'.$image);
         }
-        // $post->delete();
-        // return Redirect::route('posts.index');
+        $post->delete();
+        return Redirect::route('posts.index');
     }
 }

@@ -7,7 +7,7 @@ defineProps({
         required: true,
     },
 });
-
+// useFormフックスを使って入力値に対して処理させる
 const form = useForm({});
 
 const handleDelete = (post) => {
