@@ -87,11 +87,13 @@ class PostController extends Controller
     public function destroy(string $id)
     {
         $post = Post::findOrFail($id);
+        // 画像パスが存在する場合、S3から削除
         if ($post->image_path) {
-            $path = parse_url($post->image_path, PHP_URL_PATH);
-            Storage::disk('s3')->delete($path);
+            $path = parse_url($post->image_path, PHP_URL_PATH); //フルパスからhttps://s3.ap-northeast-1.amazonaws.com以後を取得
+            // Storage::disk('s3')->delete($path);
+            dd($path);
         }
-        $post->delete();
-        return Redirect::route('posts.index');
+        // $post->delete();
+        // return Redirect::route('posts.index');
     }
 }
