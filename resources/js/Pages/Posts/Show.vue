@@ -8,11 +8,18 @@ defineProps({
     },
 });
 
-// const form = useForm();
+const form = useForm({});
 
-const handleDelete = () => {
-    if (confirm('本当に削除しますか？')) {
-        form.destroy(route('posts.destroy', post.id));
+const handleDelete = (post) => {
+    if (confirm('本当に削除すんの？')) {
+        form.delete(route('posts.destroy',post.id),{
+            onSuccess: () => {
+                alert('投稿が削除されました。');
+            },
+            onError: (errors) => {
+                alert('削除に失敗しました。もう一度お試しください。');
+            }
+        });
     }
 };
 
@@ -29,7 +36,7 @@ const handleDelete = () => {
         </div>
         <div class="mx-auto p-5 flex items-center justify-center">
             <Link :href="route('posts.edit',post.id)" class="m-5 p-2 shadow-md rounded-lg bg-blue-500 text-white">編集</Link>
-            <button class="m-5 p-2 shadow-md rounded-lg bg-red-500 text-white" type="button" @click="handleDelete">削除</button>
+            <button class="m-5 p-2 shadow-md rounded-lg bg-red-500 text-white" type="button" @click="handleDelete(post)">削除</button>
         </div>
     </div>
 </template>

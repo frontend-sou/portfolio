@@ -87,8 +87,11 @@ class PostController extends Controller
     public function destroy(string $id)
     {
         $post = Post::findOrFail($id);
+        if ($post->image_path) {
+            $path = parse_url($post->image_path, PHP_URL_PATH);
+            Storage::disk('s3')->delete($path);
+        }
         $post->delete();
-
         return Redirect::route('posts.index');
     }
 }
