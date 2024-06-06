@@ -11,7 +11,7 @@ const handleFileChange = e =>{
   form.image = e.target.files[0];
 }
 
-function submit() {
+const submit = ()=> {
   form.post('/posts', {
     forceFormData: true // 画像を含むためFormDataを使用
   });
