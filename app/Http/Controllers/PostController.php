@@ -30,21 +30,19 @@ class PostController extends Controller
     {
         // リクエストのバリデーション済みデータを取得
         $validated = $request->validated();
-        
-        // リクエストデータからtitle,contentのみ抽出
-        $data = Arr::only($validated, ['title', 'content']);
+
         if ($request->hasFile('image')) {
             // ファイルを取得しS3に保存。第一引数'posts'はS3上の保存先ディレクトリを指定しており、第二引数's3'はファイルシステムのディスク名
             try {
                 $imagePath = $request->file('image')->store($this->diskImageFolder, 's3');
                 $url = Storage::disk('s3')->url($imagePath); // urlでいいの？
-                $data['image_path'] = $url;
+                $validated['image_path'] = $url;
             } catch (\Exception $e) {
                 return back()->withErrors(['image' => '画像のアップロードに失敗しました: ' . $e->getMessage()]);
             }
         }
 
-        Post::createPost($data);
+        Post::createPost($validated);
 
         return Redirect::route('posts.index');
     }
@@ -79,9 +77,29 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(StorePostRequest $request, string $id)
     {
-        //
+        $post = Post::findOrFail($id);
+        $validated = $request->validated();
+
+        // 画像がアップロードされた場合の処理
+        if ($request->hasFile('image')) {
+        // 既存の画像を削除
+            if ($post->image_path) {
+                try {
+                    Storage::disk('s3')->delete($post->image_path);
+                    // 新しい画像をアップロード
+                    $imagePath = $request->file('image')->store($this->diskImageFolder, 's3');
+                    $validated['image_path'] = Storage::disk('s3')->url($imagePath);
+                } catch (\Exception $e) {
+                    return back()->withErrors(['image' => '画像のアップロードに失敗しました: ' . $e->getMessage()]);
+                }
+            }
+        }
+        // 投稿を更新
+        $post->update($validated);
+
+        return redirect()->route('posts.index');
     }
 
     /**
