@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use App\Http\Requests\StorePostRequest;
+use App\Http\Requests\PostRequest;
+use App\Http\Requests\PutRequest;
 use App\Models\Post;
 use App\Models\User;
 use Inertia\Inertia;
@@ -26,7 +27,7 @@ class PostController extends Controller
     }
 
     // 投稿情報の保存処理
-    public function store(StorePostRequest $request)
+    public function store(PostRequest $request)
     {
         // リクエストのバリデーション済みデータを取得
         $validated = $request->validated();
@@ -77,7 +78,7 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(StorePostRequest $request, string $id)
+    public function update(PutRequest $request, string $id)
     {
         $post = Post::findOrFail($id);
         $validated = $request->validated();

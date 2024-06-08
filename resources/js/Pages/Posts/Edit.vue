@@ -9,9 +9,9 @@ const props = defineProps({
 });
 
 const form = useForm({
-  title: props.post.title,
-  content: props.post.content,
-  image: null,
+    title: props.post.title || '',
+    content: props.post.content || '',
+    image: null,
 });
 
 
@@ -20,9 +20,8 @@ const handleFileChange = (e) => {
 }
 
 const submit = ()=>{
-  form.put(`/posts/${props.post.id}`,{
-  forceFormData: true,
-  })
+    console.log(form.data());
+
 };
 
 </script>
@@ -44,8 +43,8 @@ const submit = ()=>{
             </div>
             <div>
                 <label for="image">画像アップロード</label>
-                <div v-if="form.existingImagePath">
-                    <img :src="form.existingImagePath" alt="Current Image" style="max-width: 200px;" />
+                <div v-if="post.image_path">
+                    <img :src="post.image_path" alt="Current Image" style="max-width: 200px;" />
                 </div>
                 <input @change="handleFileChange" type="file" id="image" />
             </div>
