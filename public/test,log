@@ -1,0 +1,17 @@
+Array
+(
+    [title] => fasfafa
+    [content] => fafafafa
+    [_method] => PUT
+    [image] => Illuminate\Http\UploadedFile Object
+        (
+            [test:Symfony\Component\HttpFoundation\File\UploadedFile:private] => 
+            [originalName:Symfony\Component\HttpFoundation\File\UploadedFile:private] => MAHR5724.JPEG
+            [mimeType:Symfony\Component\HttpFoundation\File\UploadedFile:private] => image/jpeg
+            [error:Symfony\Component\HttpFoundation\File\UploadedFile:private] => 0
+            [hashName:protected] => 
+            [pathName:SplFileInfo:private] => /tmp/phpKxa4QS
+            [fileName:SplFileInfo:private] => phpKxa4QS
+        )
+
+)

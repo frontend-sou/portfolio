@@ -1,5 +1,6 @@
 <script setup>
 import { Head, useForm } from '@inertiajs/vue3';
+import { route } from '../../../../vendor/tightenco/ziggy/src/js';
 
 const props = defineProps({
     post: {
@@ -12,6 +13,7 @@ const form = useForm({
     title: props.post.title || '',
     content: props.post.content || '',
     image: null,
+    _method: 'PUT', //フォームメソッドのオーバーライドを利用。
 });
 
 
@@ -19,8 +21,11 @@ const handleFileChange = (e) => {
     form.image = e.target.files[0];
 }
 
-const submit = ()=>{
+const submit = (post)=>{
     console.log(form.data());
+    form.post(route('posts.update',{post: props.post})),{
+        forceFormData: true,
+    }
 
 };
 
@@ -30,7 +35,8 @@ const submit = ()=>{
     <Head title="投稿編集" />
     <div>
         <h1>投稿編集</h1>
-        <form @submit.prevent="submit">
+        <!-- 画像データの時はformにenctype必須 -->
+        <form @submit.prevent="submit" enctype="multipart/form-data">
             <div>
                 <label for="title">タイトル</label>
                 <input v-model="form.title" id="title" type="text" />
@@ -43,12 +49,12 @@ const submit = ()=>{
             </div>
             <div>
                 <label for="image">画像アップロード</label>
-                <div v-if="post.image_path">
-                    <img :src="post.image_path" alt="Current Image" style="max-width: 200px;" />
-                </div>
                 <input @change="handleFileChange" type="file" id="image" />
             </div>
             <button type="submit">送信</button>
         </form>
+        <div v-if="post.image_path">
+            <img  class="h-auto max-w-14 rounded-lg" :src="post.image_path" alt="Current Image"/>
+        </div>
     </div>
 </template>
