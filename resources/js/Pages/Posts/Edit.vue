@@ -21,8 +21,8 @@ const handleFileChange = (e) => {
     form.image = e.target.files[0];
 }
 
-const submit = (post)=>{
-    console.log(form.data());
+const submit = ()=>{
+    // ルート,パラメータはroute()内に入れる
     form.post(route('posts.update',{post: props.post})),{
         forceFormData: true,
     }

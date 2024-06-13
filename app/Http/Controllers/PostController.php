@@ -2,20 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
+
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\PostRequest;
-use App\Http\Requests\PutRequest;
 use App\Models\Post;
-use App\Models\User;
 use Inertia\Inertia;
-use Inertia\Response;
-use Faker\Guesser\Name;
-use Illuminate\Support\Arr;
-use PhpParser\Node\Stmt\Return_;
+
 
 class PostController extends Controller
 {
@@ -79,24 +72,25 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(PutRequest $request, string $id)
+    public function update(PostRequest $request, string $id)
     {
         $post = Post::findOrFail($id);
         $validated = $request->validated();
 
         // 画像がアップロードされた場合の処理
         if ($request->hasFile('image')) {
-        // 既存の画像を削除
-            if ($post->image_path) {
-                try {
-                    Storage::disk('s3')->delete($post->image_path);
-                    // 新しい画像をアップロード
-                    $imagePath = $request->file('image')->store($this->diskImageFolder, 's3');
-                    $validated['image_path'] = Storage::disk('s3')->url($imagePath);
-                } catch (\Exception $e) {
-                    return back()->withErrors(['image' => '画像のアップロードに失敗しました: ' . $e->getMessage()]);
-                }
+            try {
+                // DBに登録されているパスはフルパス。s3のimage名(basename)も削除処理
+                $image = basename($post->image_path);
+                Storage::disk('s3')->delete($this->diskImageFolder.'/'.$image);
+                Storage::disk('s3')->delete($post->image_path);
+                // 新しい画像をアップロード
+                $imagePath = $request->file('image')->store($this->diskImageFolder, 's3');
+                $validated['image_path'] = Storage::disk('s3')->url($imagePath);
+            } catch (\Exception $e) {
+                return back()->withErrors(['image' => '画像のアップロードに失敗しました: ' . $e->getMessage()]);
             }
+            
         }
         // 投稿を更新
         $post->update($validated);
