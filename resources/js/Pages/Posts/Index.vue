@@ -1,4 +1,6 @@
 <script setup>
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import PrimaryButton from '../../Components/PrimaryButton.vue';
 import { Head ,Link } from '@inertiajs/vue3';
 
 defineProps({
@@ -9,13 +11,16 @@ defineProps({
 </script>
 
 <template>
-  <div>
-    <Head title="投稿一覧" />
-    <div class="container mx-auto p-4">
-      <h1 class="text-4xl font-extrabold text-gray-800 mb-8">投稿一覧</h1>
-      <Link :href="route('posts.create')" class="position relative m-5 p-2 shadow-md rounded-lg bg-blue-500 text-white">
-        <button class="focus:cursor-auto">新規投稿</button>
+  <Head title="投稿一覧" />
+  <AuthenticatedLayout>
+    <template #header>
+      <h2 class="font-semibold text-xl text-gray-800 leading-tight">投稿一覧</h2>
+      <Link :href="route('posts.create')" class="inline-flex items-center gap-4">
+        <PrimaryButton >新規投稿</PrimaryButton>
       </Link>
+    </template>
+    
+    <div class="container mx-auto p-4">
       <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         <li v-for="post in posts" :key="post.id" class="bg-white rounded-lg shadow-lg overflow-hidden">
           <Link :href="`/posts/${post.id}`" class="block hover:shadow-xl transition-shadow duration-300">
@@ -27,7 +32,7 @@ defineProps({
         </li>
       </ul>
     </div>
-  </div>
+  </AuthenticatedLayout>
 </template>
 
 

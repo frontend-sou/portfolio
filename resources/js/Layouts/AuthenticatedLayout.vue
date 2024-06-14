@@ -7,7 +7,7 @@ import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import { Link } from '@inertiajs/vue3';
 
-const showingNavigationDropdown = ref(false);
+const showingNavigationDropdown = ref(true);
 </script>
 
 <template>
@@ -27,10 +27,14 @@ const showingNavigationDropdown = ref(false);
                                 </Link>
                             </div>
 
-                            <!-- Navigation Links -->
+                            <!-- ナビゲーションリンク -->
                             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                                    Dashboard
+                                    ダッシュボード
+                                </NavLink>
+                                <!-- ルート、カレントメソッド内は名前付きルート -->
+                                <NavLink :href="route('posts.index')" :active="route().current('posts.index')">
+                                    投稿一覧
                                 </NavLink>
                             </div>
                         </div>
@@ -64,9 +68,9 @@ const showingNavigationDropdown = ref(false);
                                     </template>
 
                                     <template #content>
-                                        <DropdownLink :href="route('profile.edit')"> Profile </DropdownLink>
+                                        <DropdownLink :href="route('profile.edit')"> ユーザー情報 </DropdownLink>
                                         <DropdownLink :href="route('logout')" method="post" as="button">
-                                            Log Out
+                                            ログアウト
                                         </DropdownLink>
                                     </template>
                                 </Dropdown>
@@ -113,7 +117,10 @@ const showingNavigationDropdown = ref(false);
                 >
                     <div class="pt-2 pb-3 space-y-1">
                         <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                            Dashboard
+                            ダッシュボード
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('posts.index')" :active="route().current('posts.index')">
+                            投稿一覧
                         </ResponsiveNavLink>
                     </div>
 
@@ -127,9 +134,9 @@ const showingNavigationDropdown = ref(false);
                         </div>
 
                         <div class="mt-3 space-y-1">
-                            <ResponsiveNavLink :href="route('profile.edit')"> Profile </ResponsiveNavLink>
+                            <ResponsiveNavLink :href="route('profile.edit')"> ユーザー情報 </ResponsiveNavLink>
                             <ResponsiveNavLink :href="route('logout')" method="post" as="button">
-                                Log Out
+                                ログアウト
                             </ResponsiveNavLink>
                         </div>
                     </div>
@@ -138,7 +145,8 @@ const showingNavigationDropdown = ref(false);
 
             <!-- Page Heading -->
             <header class="bg-white shadow" v-if="$slots.header">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                <!-- 要素を上下中央揃え、等間隔に配置 -->
+                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex justify-between p-5">
                     <slot name="header" />
                 </div>
             </header>
