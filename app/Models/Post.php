@@ -31,8 +31,8 @@ class Post extends Model
     }
 
     // 全投稿の一覧を取得
-    public static function getPostIndex(){
-        return self::postIndex()->get();
+    public static function getPostIndex($perPage = 10){
+        return self::postIndex()->paginate($perPage);
     }
 
     private static function myPost(){

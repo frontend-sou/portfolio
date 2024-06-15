@@ -5,7 +5,8 @@ import { Head ,Link } from '@inertiajs/vue3';
 
 defineProps({
     posts:{
-        type: Array,
+        type: Object,
+        required: true,
       },
 });
 </script>

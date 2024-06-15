@@ -46,7 +46,9 @@ class PostController extends Controller
     // 投稿一覧ページにユーザーの投稿を参照
     public function index()
     {
-        $posts = Post::getPostIndex();
+        // ページネーション実装したい
+        $posts = Post::getPostIndex(10);
+        dd($posts);
         return Inertia::render('Posts/Index', ['posts' => $posts]);
     }
     
