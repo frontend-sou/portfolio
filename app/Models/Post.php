@@ -25,4 +25,23 @@ class Post extends Model
             'image_path' => $data['image_path'] ?? null,
         ]);
     }
+
+    private static function postIndex(){
+        return self::orderBy('created_at','desc');
+    }
+
+    // 全投稿の一覧を取得
+    public static function getPostIndex(){
+        return self::postIndex()->get();
+    }
+
+    private static function myPost(){
+        $userId = Auth::id();
+        return self::where('user_id',$userId)->orderBy('created_at','desc');
+    }
+
+    // 認証ユーザーの投稿一覧を取得
+    public static function getMyPostIndex(){
+        return self::myPost()->get();
+    }
 }

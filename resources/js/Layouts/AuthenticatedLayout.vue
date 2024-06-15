@@ -36,6 +36,9 @@ const showingNavigationDropdown = ref(true);
                                 <NavLink :href="route('posts.index')" :active="route().current('posts.index')">
                                     投稿一覧
                                 </NavLink>
+                                <NavLink :href="route('myPost')" :active="route().current('myPost')">
+                                    マイ投稿
+                                </NavLink>
                             </div>
                         </div>
 
@@ -121,6 +124,9 @@ const showingNavigationDropdown = ref(true);
                         </ResponsiveNavLink>
                         <ResponsiveNavLink :href="route('posts.index')" :active="route().current('posts.index')">
                             投稿一覧
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('myPost')" :active="route().current('myPost')">
+                            マイ投稿
                         </ResponsiveNavLink>
                     </div>
 

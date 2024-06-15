@@ -9,6 +9,7 @@ use App\Http\Requests\PostRequest;
 use App\Models\Post;
 use Inertia\Inertia;
 
+use function Termwind\render;
 
 class PostController extends Controller
 {
@@ -45,14 +46,10 @@ class PostController extends Controller
     // 投稿一覧ページにユーザーの投稿を参照
     public function index()
     {
-        $posts = Post::orderBy('created_at', 'desc')->get();
+        $posts = Post::getPostIndex();
         return Inertia::render('Posts/Index', ['posts' => $posts]);
     }
     
-
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         // findOrFailでデータが見つからないとき404httpレスポンスを返す
@@ -60,18 +57,12 @@ class PostController extends Controller
         return Inertia::render('Posts/Show', ['post' => $post]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
         $post = Post::findOrFail($id);
         return Inertia::render('Posts/Edit',['post' => $post]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(PostRequest $request, string $id)
     {
         $post = Post::findOrFail($id);
@@ -98,9 +89,6 @@ class PostController extends Controller
         return redirect()->route('posts.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         $post = Post::findOrFail($id);
@@ -111,5 +99,11 @@ class PostController extends Controller
         }
         $post->delete();
         return Redirect::route('posts.index');
+    }
+
+    // マイ投稿で認証ユーザーの投稿のみ表示(DBのN+1問題に注意、sql文で投稿一覧タブクリックした際にテーブルからユーザー投稿一覧データも取得？)
+    public function myPostIndex(){
+        $myPosts = Post::getMyPostIndex();
+        return inertia::render('Posts/MyPost',['myPosts' => $myPosts]);
     }
 }

@@ -27,6 +27,8 @@ Route::middleware('auth')->group(function () {
     
     // PostControllerのメソッドとルーティングをRoute::resource一つで紐づけ
     Route::resource('posts', PostController::class);
+    // マイ投稿のルーティング
+    Route::get('/myPost', [PostController::class, 'myPostIndex'])->name('myPost');
 });
 
 require __DIR__.'/auth.php';

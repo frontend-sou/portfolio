@@ -20,7 +20,7 @@ defineProps({
       </Link>
     </template>
     
-    <div class="container mx-auto p-4">
+    <div class="container mx-auto py-10">
       <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         <li v-for="post in posts" :key="post.id" class="bg-white rounded-lg shadow-lg overflow-hidden">
           <Link :href="`/posts/${post.id}`" class="block hover:shadow-xl transition-shadow duration-300">
