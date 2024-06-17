@@ -29,6 +29,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('posts', PostController::class);
     // マイ投稿のルーティング
     Route::get('/myPost', [PostController::class, 'myPostIndex'])->name('myPost');
+    // お気に入りのルーティング
+    Route::get('/favorite', [PostController::class, 'favoriteIndex'])->name('favorite');
+
 });
 
 require __DIR__.'/auth.php';

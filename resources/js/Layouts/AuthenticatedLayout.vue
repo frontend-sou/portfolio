@@ -39,6 +39,9 @@ const showingNavigationDropdown = ref(true);
                                 <NavLink :href="route('myPost')" :active="route().current('myPost')">
                                     マイ投稿
                                 </NavLink>
+                                <NavLink :href="route('favorite')" :active="route().current('favorite')">
+                                    お気に入り
+                                </NavLink>
                             </div>
                         </div>
 
@@ -127,6 +130,9 @@ const showingNavigationDropdown = ref(true);
                         </ResponsiveNavLink>
                         <ResponsiveNavLink :href="route('myPost')" :active="route().current('myPost')">
                             マイ投稿
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('favorite')" :active="route().current('favorite')">
+                            お気に入り
                         </ResponsiveNavLink>
                     </div>
 

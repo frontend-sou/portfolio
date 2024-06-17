@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Auth;
 class Post extends Model
 {
     use HasFactory;
+
+    // DBのデータ取得定義
+    protected $orderBy = 'created_at';
+    protected $direction = 'desc';
+    protected $perPage = 3;
     
     // モデルで操作可能なフィールドを指定
     protected $fillable = ['user_id', 'title', 'content', 'image_path'];
@@ -26,22 +31,37 @@ class Post extends Model
         ]);
     }
 
-    private static function postIndex(){
-        return self::orderBy('created_at','desc');
+    public function setOrderBy($orderBy)
+    {
+        $this->orderBy = $orderBy;
+        return $this;
     }
 
-    // 全投稿の一覧を取得
-    public static function getPostIndex($perPage = 10){
-        return self::postIndex()->paginate($perPage);
+    public function setDirection($direction)
+    {
+        $this->direction = $direction;
+        return $this;
     }
 
-    private static function myPost(){
+    public function setPerPage($perPage)
+    {
+        $this->perPage = $perPage;
+        return $this;
+    }
+
+    // 投稿情報のゲッター
+    public function getPosts()
+    {
+        return self::orderBy($this->orderBy, $this->direction)
+        ->paginate($this->perPage);
+    }
+
+    // マイ投稿のゲッター
+    public function getMyPosts()
+    {
         $userId = Auth::id();
-        return self::where('user_id',$userId)->orderBy('created_at','desc');
-    }
-
-    // 認証ユーザーの投稿一覧を取得
-    public static function getMyPostIndex(){
-        return self::myPost()->get();
+        return self::where('user_id',$userId)
+        ->orderBy($this->orderBy,$this->direction)
+        ->paginate($this->perPage);
     }
 }

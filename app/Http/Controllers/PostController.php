@@ -47,8 +47,7 @@ class PostController extends Controller
     public function index()
     {
         // ページネーション実装したい
-        $posts = Post::getPostIndex(10);
-        dd($posts);
+        $posts = (new Post())->getPosts();
         return Inertia::render('Posts/Index', ['posts' => $posts]);
     }
     
@@ -105,7 +104,14 @@ class PostController extends Controller
 
     // マイ投稿で認証ユーザーの投稿のみ表示(DBのN+1問題に注意、sql文で投稿一覧タブクリックした際にテーブルからユーザー投稿一覧データも取得？)
     public function myPostIndex(){
-        $myPosts = Post::getMyPostIndex();
+        $myPosts = (new Post())->getMyPosts();
         return inertia::render('Posts/MyPost',['myPosts' => $myPosts]);
     }
+
+    public function favoriteIndex(){
+        // $favorites = (new Post())->getFavorites();
+        return inertia::render('Posts/Favorite'); //['favorites' =>$favorites ]);
+    }
+
+
 }
