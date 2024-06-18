@@ -3,7 +3,7 @@ import { Head,Link } from '@inertiajs/vue3';
 import AuthenticatedLayout from '../../Layouts/AuthenticatedLayout.vue';
 
 defineProps({
-    favorites:{
+    likes:{
         type: Object,
         require: true,
       },
@@ -18,10 +18,10 @@ function decodeHtmlEntity(text) {
 </script>
 
 <template>
-    <Head title="お気に入り" />
+    <Head title="いいね" />
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">お気に入り</h2>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">いいね</h2>
         </template>
     </AuthenticatedLayout>
 </template>

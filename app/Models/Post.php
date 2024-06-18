@@ -18,6 +18,18 @@ class Post extends Model
     // モデルで操作可能なフィールドを指定
     protected $fillable = ['user_id', 'title', 'content', 'image_path'];
 
+    // 各投稿は一人のユーザーに属する
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    // 1対多
+    public function like()
+    {
+        return $this->hasMany(Like::class);
+    }
+
     // Postモデルに新しいレコードを作成。$dataはフォームから送信されたデータを配列形式で取得
     public static function createPost($data)
     {

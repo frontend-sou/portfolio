@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\LikeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -29,8 +30,11 @@ Route::middleware('auth')->group(function () {
     Route::resource('posts', PostController::class);
     // マイ投稿のルーティング
     Route::get('/myPost', [PostController::class, 'myPostIndex'])->name('myPost');
+
     // お気に入りのルーティング
-    Route::get('/favorite', [PostController::class, 'favoriteIndex'])->name('favorite');
+    Route::get('/like', [LikeController::class, 'index'])->name('like');
+    Route::post('/posts/{post}/like', [LikeController::class, 'store'])->name('like.store');
+    Route::delete('/posts/{post}/like', [LikeController::class, 'destroy'])->name('like.destroy');  
 
 });
 

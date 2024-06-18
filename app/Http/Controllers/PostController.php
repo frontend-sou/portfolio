@@ -9,7 +9,6 @@ use App\Http\Requests\PostRequest;
 use App\Models\Post;
 use Inertia\Inertia;
 
-use function Termwind\render;
 
 class PostController extends Controller
 {
@@ -107,11 +106,4 @@ class PostController extends Controller
         $myPosts = (new Post())->getMyPosts();
         return inertia::render('Posts/MyPost',['myPosts' => $myPosts]);
     }
-
-    public function favoriteIndex(){
-        // $favorites = (new Post())->getFavorites();
-        return inertia::render('Posts/Favorite'); //['favorites' =>$favorites ]);
-    }
-
-
 }
