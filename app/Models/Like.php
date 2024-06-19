@@ -9,7 +9,12 @@ class Like extends Model
 {
     use HasFactory;
 
+    // DBのデータ取得定義
     protected $fillable = ['user_id','post_id'];
+    protected $orderBy = 'created_at';
+    protected $direction = 'desc';
+    protected $perPage = 3;
+
 
     // いいねは一人のユーザーに属する
     public function user()
@@ -22,6 +27,5 @@ class Like extends Model
     {
         return $this->belongsTo(Post::class);
     }
-
     
 }

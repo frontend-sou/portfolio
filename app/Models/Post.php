@@ -11,12 +11,11 @@ class Post extends Model
     use HasFactory;
 
     // DBのデータ取得定義
+    protected $fillable = ['user_id', 'title', 'content', 'image_path'];
     protected $orderBy = 'created_at';
     protected $direction = 'desc';
     protected $perPage = 3;
     
-    // モデルで操作可能なフィールドを指定
-    protected $fillable = ['user_id', 'title', 'content', 'image_path'];
 
     // 各投稿は一人のユーザーに属する
     public function user()

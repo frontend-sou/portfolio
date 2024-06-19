@@ -1,6 +1,7 @@
 <script setup>
 import { Head,Link } from '@inertiajs/vue3';
 import AuthenticatedLayout from '../../Layouts/AuthenticatedLayout.vue';
+import Pagination from '@/Components/Pagination.vue';
 
 defineProps({
     likes:{
@@ -8,12 +9,6 @@ defineProps({
         require: true,
       },
 });
-
-function decodeHtmlEntity(text) {
-    const textArea = document.createElement('textarea');
-    textArea.innerHTML = text;
-    return textArea.value;
-}
 
 </script>
 
@@ -23,5 +18,20 @@ function decodeHtmlEntity(text) {
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">いいね</h2>
         </template>
+
+        <div class="container mx-auto py-10">
+            <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
+                <li v-for="like in likes.data" :key="like.id" class="bg-white rounded-lg shadow-lg overflow-hidden">
+                    <Link :href="`/posts/${like.id}`" class="block hover:shadow-xl transition-shadow duration-300">
+                        <div class="p-4">
+                            <h2 class="text-2xl font-semibold text-gray-900 mb-3">タイトル：{{ like.title }}</h2>
+                            <img v-if="like.image_path" :src="like.image_path" alt="Post Image" class="w-full h-48 object-cover rounded-md">
+                        </div>
+                    </Link>
+                </li>
+            </ul>
+            <!-- ページネーション -->
+            <Pagination :links="likes.links" />
+        </div>
     </AuthenticatedLayout>
 </template>

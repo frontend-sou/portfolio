@@ -13,7 +13,9 @@ class LikeController extends Controller
 {
     public function index()
     {
-        return inertia::render('Posts/Like',[]);
+        $likes = (new Post())->like();
+        dd($likes);
+        return inertia::render('Posts/Like',['likes' => $likes]);
     }
     
     // firstOrCreateメソッドは2023年のlaravelアップデートでレースコンディションのエラー解決
