@@ -11,64 +11,26 @@ use Inertia\Inertia;
 
 class LikeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         return inertia::render('Posts/Like',[]);
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
+    
     // firstOrCreateメソッドは2023年のlaravelアップデートでレースコンディションのエラー解決
-    public function store(Request $request,Post $post)
+    public function store(Post $post)
     {
-        $like = Like::firstOrCreate(['user_id' => Auth::id(), 'post_id' => $post->id]);
-        dd($like);
+        $userId = Auth::id();
+        $postId = $post->id;
+        Like::firstOrCreate(['user_id' => $userId, 'post_id' => $postId]);
 
         return redirect()->back();
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function destroy(Post $post)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id, Post $post)
-    {
-        $like = Like::where('user_id', Auth::id())->where('post_id', $post->id)->first();
+        $userId = Auth::id();
+        $postId = $post->id;
+        $like = Like::where('user_id', $userId)->where('post_id', $postId)->first();
         
         if ($like) {
             $like->delete();

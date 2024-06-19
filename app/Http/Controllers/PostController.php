@@ -6,7 +6,9 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\PostRequest;
+use App\Models\Like;
 use App\Models\Post;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 
@@ -53,8 +55,13 @@ class PostController extends Controller
     public function show(string $id)
     {
         // findOrFailでデータが見つからないとき404httpレスポンスを返す
+        $user = Auth::user();
+        $userId = Auth::id();
         $post = Post::findOrFail($id);
-        return Inertia::render('Posts/Show', ['post' => $post]);
+        // 認証ユーザーの有無→いたら投稿のいいねレコード、ユーザーID取得、存在したらtrue返す
+        $liked = $user ? $post->like()->where('user_id',$userId)->exists() : false;
+
+        return Inertia::render('Posts/Show', ['post' => $post,'liked' => $liked]);
     }
 
     public function edit(string $id)
