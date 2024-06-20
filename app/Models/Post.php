@@ -24,7 +24,7 @@ class Post extends Model
     }
 
     // 1対多
-    public function like()
+    public function likes()
     {
         return $this->hasMany(Like::class);
     }
@@ -73,6 +73,17 @@ class Post extends Model
         $userId = Auth::id();
         return self::where('user_id',$userId)
         ->orderBy($this->orderBy,$this->direction)
+        ->paginate($this->perPage);
+    }
+
+    // いいね投稿のゲッター
+    public function getLikePosts()
+    {
+        $userId = Auth::id();
+        return self::whereHas('likes', function ($query) use ($userId) {
+            $query->where('user_id', $userId);
+        })
+        ->orderBy($this->orderBy, $this->direction)
         ->paginate($this->perPage);
     }
 }

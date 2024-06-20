@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\PostRequest;
 use App\Models\Like;
 use App\Models\Post;
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
@@ -59,7 +60,7 @@ class PostController extends Controller
         $userId = Auth::id();
         $post = Post::findOrFail($id);
         // 認証ユーザーの有無→いたら投稿のいいねレコード、ユーザーID取得、存在したらtrue返す
-        $liked = $user ? $post->like()->where('user_id',$userId)->exists() : false;
+        $liked = $user ? $post->likes()->where('user_id',$userId)->exists() : false;
 
         return Inertia::render('Posts/Show', ['post' => $post,'liked' => $liked]);
     }
@@ -113,4 +114,5 @@ class PostController extends Controller
         $myPosts = (new Post())->getMyPosts();
         return inertia::render('Posts/MyPost',['myPosts' => $myPosts]);
     }
+
 }

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Like;
 use App\Models\Post;
-use Illuminate\Http\Request;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
@@ -13,8 +13,7 @@ class LikeController extends Controller
 {
     public function index()
     {
-        $likes = (new Post())->like();
-        dd($likes);
+        $likes = (new Post())->getLikePosts();
         return inertia::render('Posts/Like',['likes' => $likes]);
     }
     
@@ -36,6 +35,8 @@ class LikeController extends Controller
         
         if ($like) {
             $like->delete();
+            
+            // ここに画面のいいね投稿も同時に消す処理
         }
 
         return redirect()->back();
