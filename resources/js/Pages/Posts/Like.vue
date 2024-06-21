@@ -1,16 +1,40 @@
 <script setup>
-import { Head,Link } from '@inertiajs/vue3';
+import { ref, onMounted, onUnmounted } from 'vue';
+import { usePage, Link, Head } from '@inertiajs/vue3';
 import AuthenticatedLayout from '../../Layouts/AuthenticatedLayout.vue';
 import Pagination from '@/Components/Pagination.vue';
 
-defineProps({
-    likes:{
-        type: Object,
-        require: true,
-      },
+// const props = defineProps({
+//     likes:{
+//         type: Object,
+//         require: true,
+//     }
+// });
+
+// usePageで共有データとしてlikesを扱う(likeControllerのpropsと自動的に同期)
+const { props } = usePage();
+const likes = ref(props.likes);
+
+// 投稿のいいねを解除したときの処理
+const handlePostUnliked = (e) => {
+    // show.vueで定義したe.detailプロパティをpostIdで定義
+    const postId = e.detail;
+
+    // いいねされた投稿からいいねを外した投稿をフィルターして配列を再生成
+    likes.value.data = likes.value.data.filter(like => like.id !== postId);
+};
+
+// コンポーネントがレンダリングされる直前に実行
+onMounted(() => {
+    window.addEventListener('post-unliked', handlePostUnliked);
 });
 
+// コンポーネントが画面から除去される直前に実行
+onUnmounted(() => {
+    window.removeEventListener('post-unliked', handlePostUnliked);
+});
 </script>
+
 
 <template>
     <Head title="いいね" />

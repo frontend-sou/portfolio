@@ -20,7 +20,7 @@ const showingNavigationDropdown = ref(true);
                         <div class="flex">
                             <!-- Logo -->
                             <div class="shrink-0 flex items-center">
-                                <Link :href="route('dashboard')">
+                                <Link :href="route('posts.index')">
                                     <ApplicationLogo
                                         class="block h-9 w-auto fill-current text-gray-800"
                                     />
@@ -29,9 +29,9 @@ const showingNavigationDropdown = ref(true);
 
                             <!-- ナビゲーションリンク -->
                             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
+                                <!-- <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
                                     ダッシュボード
-                                </NavLink>
+                                </NavLink> -->
                                 <!-- ルート、カレントメソッド内は名前付きルート -->
                                 <NavLink :href="route('posts.index')" :active="route().current('posts.index')">
                                     投稿一覧
@@ -122,9 +122,9 @@ const showingNavigationDropdown = ref(true);
                     class="sm:hidden"
                 >
                     <div class="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
+                        <!-- <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
                             ダッシュボード
-                        </ResponsiveNavLink>
+                        </ResponsiveNavLink> -->
                         <ResponsiveNavLink :href="route('posts.index')" :active="route().current('posts.index')">
                             投稿一覧
                         </ResponsiveNavLink>

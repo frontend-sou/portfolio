@@ -41,7 +41,15 @@ const toggleClicked = () => {
   if (clicked.value) {
     form.post(route('like.store',{post: props.post.id}));
   } else{
-    form.delete(route('like.destroy',{post: props.post.id}));
+    form.delete(route('like.destroy',{post: props.post.id}),{
+        onSuccess: () => {
+            // カスタムイベント'post-unlike'を作成し、イベントを発火させそれに対する処理をイベントの送り先で実行
+            const e = new CustomEvent('post-unliked',{detail: props.post.id});
+            window.dispatchEvent(e);
+            
+        }
+    });
+    
   }
 };
 
