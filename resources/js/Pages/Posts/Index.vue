@@ -12,6 +12,7 @@ const props = defineProps({
     },
 }); 
 
+
 </script>
 
 <template>
@@ -25,6 +26,8 @@ const props = defineProps({
         </template>
     
         <div class="container mx-auto py-10">
+            <!-- 検索機能 -->
+             
             <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
                 <!-- postsはArray,paginateはdataプロパティに格納されているためpost.dataにアクセスしてArray回す -->
                 <li v-for="post in posts.data" :key="post.id" class="bg-white rounded-lg shadow-lg overflow-hidden">
