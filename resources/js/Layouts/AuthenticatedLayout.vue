@@ -29,10 +29,6 @@ const showingNavigationDropdown = ref(true);
 
                             <!-- ナビゲーションリンク -->
                             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <!-- <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                                    ダッシュボード
-                                </NavLink> -->
-                                <!-- ルート、カレントメソッド内は名前付きルート -->
                                 <NavLink :href="route('posts.index')" :active="route().current('posts.index')">
                                     投稿一覧
                                 </NavLink>

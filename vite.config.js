@@ -1,6 +1,8 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 import vue from '@vitejs/plugin-vue';
+import Icons from 'unplugin-icons/vite'
+import { FileSystemIconLoader } from 'unplugin-icons/loaders'
 
 export default defineConfig({
     plugins: [
@@ -14,6 +16,12 @@ export default defineConfig({
                     base: null,
                     includeAbsolute: false,
                 },
+            },
+        }),
+        // プラグインのunplugin-icons用加筆
+        Icons({
+            customCollections: {
+              svg: FileSystemIconLoader('src/assets/icons')
             },
         }),
     ],
