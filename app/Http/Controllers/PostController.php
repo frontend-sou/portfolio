@@ -6,10 +6,9 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\PostRequest;
-use App\Models\Like;
 use App\Models\Post;
-use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
 use Inertia\Inertia;
 
 
@@ -33,8 +32,9 @@ class PostController extends Controller
             // ファイルを取得しS3に保存。第一引数'posts'はS3上の保存先ディレクトリを指定しており、第二引数's3'はファイルシステムのディスク名
             try {
                 $imagePath = $request->file('image')->store($this->diskImageFolder, 's3');
-                $url = Storage::disk('s3')->url($imagePath); // urlでいいの？
-                $validated['image_path'] = $url;
+                $s3Url = Config::get('filesystems.disks.s3.url');
+                $fullUrl = $s3Url . '/' . $imagePath;
+                $validated['image_path'] = $fullUrl;
             } catch (\Exception $e) {
                 return back()->withErrors(['image' => '画像のアップロードに失敗しました: ' . $e->getMessage()]);
             }
@@ -85,7 +85,9 @@ class PostController extends Controller
                 Storage::disk('s3')->delete($post->image_path);
                 // 新しい画像をアップロード
                 $imagePath = $request->file('image')->store($this->diskImageFolder, 's3');
-                $validated['image_path'] = Storage::disk('s3')->url($imagePath);
+                $s3Url = Config::get('filesystems.disks.s3.url');
+                $fullUrl = $s3Url . '/' . $imagePath;
+                $validated['image_path'] = $fullUrl;
             } catch (\Exception $e) {
                 return back()->withErrors(['image' => '画像のアップロードに失敗しました: ' . $e->getMessage()]);
             }

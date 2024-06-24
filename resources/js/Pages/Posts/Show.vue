@@ -19,7 +19,7 @@ const form = useForm({
 });
 
 const handleDelete = (post) => {
-    if (confirm('本当に削除すんの？')) {
+    if (confirm('本当に削除しますか？')) {
         form.delete(route('posts.destroy',post.id),{
             onSuccess: () => {
                 alert('投稿が削除されました。');
@@ -60,26 +60,36 @@ const toggleClicked = () => {
 <template>
     <Head title="投稿詳細" />
     <div class="container mx-auto p-4">
-        <h1 class="text-3xl font-bold mb-7">投稿詳細</h1>
+        <h1 class="text-3xl font-bold mb-7 text-center sm:text-left">投稿詳細</h1>
         <div class="p-4 bg-white rounded-lg shadow-md">
-            <div class="flex justify-between p-5">
-                <h2 class="text-2xl font-semibold mb-2">タイトル：{{ post.title }}</h2>
+            <div class="flex flex-col sm:flex-row justify-between p-5">
+                <h2 class="text-2xl font-semibold mb-2 sm:mb-0">タイトル：{{ post.title }}</h2>
                 <!-- いいねボタン -->
-                <button type="button" :class="['border focus:outline-none font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center',clicked ? 'bg-blue-700 text-white border-blue-700' : 'text-blue-700 border-blue-700 hover:bg-blue-700 hover:text-white']"
-                @click="toggleClicked"
+                <button
+                    type="button"
+                    :class="['border focus:outline-none font-medium rounded-full text-sm px-4 py-2 text-center inline-flex items-center justify-center', clicked ? 'bg-blue-700 text-white border-blue-700' : 'text-blue-700 border-blue-700 hover:bg-blue-700 hover:text-white']"
+                    @click="toggleClicked"
+                    class="m-2 p-2 sm:mt-0 max-w-xs"
                 >
-                <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 18">
-                <path d="M3 7H1a1 1 0 0 0-1 1v8a2 2 0 0 0 4 0V8a1 1 0 0 0-1-1Zm12.954 0H12l1.558-4.5a1.778 1.778 0 0 0-3.331-1.06A24.859 24.859 0 0 1 6 6.8v9.586h.114C8.223 16.969 11.015 18 13.6 18c1.4 0 1.592-.526 1.88-1.317l2.354-7A2 2 0 0 0 15.954 7Z"/>
-                </svg>
-                <span>いいね</span>
+                    <svg class="w-4 h-4 mr-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 18">
+                        <path d="M3 7H1a1 1 0 0 0-1 1v8a2 2 0 0 0 4 0V8a1 1 0 0 0-1-1Zm12.954 0H12l1.558-4.5a1.778 1.778 0 0 0-3.331-1.06A24.859 24.859 0 0 1 6 6.8v9.586h.114C8.223 16.969 11.015 18 13.6 18c1.4 0 1.592-.526 1.88-1.317l2.354-7A2 2 0 0 0 15.954 7Z"/>
+                    </svg>
+                    <span>いいね</span>
                 </button>
             </div>
-            <img v-if="post.image_path" :src="post.image_path" alt="Post Image" class="mb-2">
+            <img v-if="post.image_path" :src="post.image_path" alt="Post Image" class="mb-2 rounded-lg w-full">
             <h1 class="mb-2">本文：{{ post.content }}</h1>
         </div>
-        <div class="mx-auto p-5 flex items-center justify-center">
-            <Link :href="route('posts.edit',post.id)" class="m-5 p-2 shadow-md rounded-lg bg-blue-500 text-white">編集</Link>
-            <button class="m-5 p-2 shadow-md rounded-lg bg-red-500 text-white" type="button" @click="handleDelete(post)">削除</button>
+        <div class="flex flex-col sm:flex-row items-center justify-center mt-5 space-y-2 sm:space-y-0 sm:space-x-2">
+            <Link
+                :href="route('posts.edit', post.id)"
+                class="m-2 p-2 shadow-md rounded-lg bg-blue-500 text-white text-center w-full sm:w-auto max-w-xs"
+            >編集</Link>
+            <button
+                class="m-2 p-2 shadow-md rounded-lg bg-red-500 text-white text-center w-full sm:w-auto max-w-xs"
+                type="button"
+                @click="handleDelete(post)"
+            >削除</button>
         </div>
     </div>
 </template>
