@@ -3,7 +3,8 @@ import BeerAnimation from '../Components/BeerAnimation.vue';
 import TopPage from '../Components/TopPage.vue';
 import { shallowRef } from 'vue';
 
-defineProps({
+const emit = defineEmits(['animation-done']);
+const props = defineProps({
     canLogin: {
         type: Boolean,
     },
@@ -12,36 +13,16 @@ defineProps({
     },
 });
 
-const emit = defineEmits(['animation-done']);
-
+// 浅いリアクティブ
 const currentComponent = shallowRef(BeerAnimation);
 
-const showTopPage = (canLogin,canRegister) => {
-    currentComponent.value = TopPage
+// propsをTopPageに渡す
+const showTopPage = () => {
+    currentComponent.value = TopPage;
 }
-
 </script>
 
 <template>
-    <div>
-        <!-- transitionコンポーネントで状態の変化に応じてスタイル適用。transitionの中にdivタグ必須 -->
-        <transition name="fade" mode="out-in">
-            <div>
-                <!-- 親コンポーネントがコンポーネントの状態を動的に呼び出し -->
-                <component :is="currentComponent" @animation-done="showTopPage(canLogin,canRegister)" />
-            </div>
-        </transition>
-    </div>
+    <!-- 親コンポーネントがコンポーネントの状態を動的に呼び出し -->
+    <component v-bind="{canLogin,canRegister}" :is="currentComponent" @animation-done="showTopPage"/>
 </template>
-
-<style>
-.fade-enter-active, .fade-leave-active {
-    transition: opacity 0.5s;
-}
-.fade-enter, .fade-leave-to {
-    opacity: 0;
-}
-</style>
-
-
-
