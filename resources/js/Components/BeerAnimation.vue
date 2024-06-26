@@ -1,13 +1,12 @@
 <script setup>
-import { onMounted,ref } from 'vue';
+import { onMounted, ref } from 'vue';
 
 const emit = defineEmits(['animation-done']);
-const showBeerAnimation = ref(true);
+
 // アニメーション終了を制御するため2.5秒後にイベントをトリガー
 // イベントを送出する関数。アニメーション終了後の操作
 const handleAnimationEnd = onMounted(() => {
     setTimeout(() => {
-        showBeerAnimation.value = false;
         emit('animation-done');
     },3000);
 });
@@ -68,24 +67,29 @@ const handleAnimationEnd = onMounted(() => {
   opacity: 0.7;
 }
 
-.bubble:nth-child(4n+1) {
+.bubble:nth-child(5n+1) {
   left: 15%;
   animation-delay: .8s;
 }
 
-.bubble:nth-child(4n+2) {
+.bubble:nth-child(5n+2) {
   left: 30%;
   animation-delay: .2s;
 }
 
-.bubble:nth-child(4n+3) {
+.bubble:nth-child(5n+3) {
   left: 60%;
   animation-delay: .4s;
 }
 
-.bubble:nth-child(4n+4) {
+.bubble:nth-child(5n+4) {
   left: 75%;
   animation-delay: .9s;
+}
+
+.bubble:nth-child(5n+5) {
+  left: 90%;
+  animation-delay: .6s;
 }
 
 @keyframes riseBubble {
