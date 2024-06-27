@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\PostRequest;
 use App\Models\Post;
+use App\Models\Tag;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Inertia\Inertia;
@@ -39,7 +40,7 @@ class PostController extends Controller
                 return back()->withErrors(['image' => '画像のアップロードに失敗しました: ' . $e->getMessage()]);
             }
         }
-
+        Tag::createTag($validated);
         Post::createPost($validated);
 
         return Redirect::route('posts.index');

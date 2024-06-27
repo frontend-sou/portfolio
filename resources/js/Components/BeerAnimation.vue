@@ -3,13 +3,23 @@ import { onMounted, ref } from 'vue';
 
 const emit = defineEmits(['animation-done']);
 
-// アニメーション終了を制御するため2.5秒後にイベントをトリガー
-// イベントを送出する関数。アニメーション終了後の操作
+const showText = ref(false);
+const hideText = ref(false);
+
+// ビールアニメーション終了2秒前にテキスト表示、アニメーション終了時にテキスト非表示
 const handleAnimationEnd = onMounted(() => {
+    // 3.5秒後にテキスト表示
     setTimeout(() => {
+        showText.value = true;
+    }, 3500);
+
+    // 5.5秒後にアニメーション終了イベント
+    setTimeout(() => {
+        hideText.value = true;
         emit('animation-done');
-    },3000);
+    }, 5500);
 });
+
 </script>
 
 <template>    
@@ -18,6 +28,11 @@ const handleAnimationEnd = onMounted(() => {
         <div class="bubble-container">
             <div class="bubble" v-for="n in 20" :key="n"></div>
         </div>
+        <transition name="fade" mode="out-in">
+            <div v-if="showText && !hideText" class="overlay">
+                <div class="text">ツマミソウ</div>
+            </div>
+        </transition>
   </div>
 </template>
 
@@ -104,6 +119,33 @@ const handleAnimationEnd = onMounted(() => {
     bottom: 100%;
     transform: scale(0.5);
   }
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(10px);
+  transition: backdrop-filter 1s, opacity 1s;
+}
+
+.text {
+  font-size: 3rem;
+  color: rgb(255, 255, 255);
+  text-align: center;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 1s;
+}
+
+.fade-enter, .fade-leave-to {
+  opacity: 0;
 }
 </style>
 

@@ -29,6 +29,11 @@ class Post extends Model
         return $this->hasMany(Like::class);
     }
 
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
+    }
+
     // Postモデルに新しいレコードを作成。$dataはフォームから送信されたデータを配列形式で取得
     public static function createPost($data)
     {
