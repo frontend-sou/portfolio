@@ -25,7 +25,7 @@ class PostRequest extends FormRequest
             'title' => 'required|string|max:50',
             'content' => 'required|string',
             'image' => 'nullable|image|max:10240',
-            'tags' => 'nullable|array|max:50',
+            'tags' => 'required|array|max:50',
         ];
     }
 }

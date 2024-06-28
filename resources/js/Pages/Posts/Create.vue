@@ -18,7 +18,7 @@ const categories = {
   お酒の種類: ["ビール", "ワイン", "焼酎", "チューハイ", "カクテル", "その他"]
 };
 
-// tagはクリックされたタグの名前
+// タグのボタン切り替え(tagはクリックされたタグの名前)
 const toggleTag = (tag) => {
   // タグがすでに選択されてtagsの中に含まれている場合、タグリストの中身一つをelementとしてtagと照合し合致した以外の要素を配列にし直して再構成
   if (selectedTags.value.includes(tag)) {
@@ -46,7 +46,7 @@ const submit = ()=> {
   <Head title="新規投稿" />
   <div class="container mx-auto p-6 bg-white shadow-md rounded-md">
     <h1 class="text-2xl font-semibold mb-4">新規投稿</h1>
-
+    <!-- タグセクション -->
     <div class="mb-4">
       <h2 class="text-xl font-semibold mb-2">タグを選択</h2>
       <!-- :keyを指定してカテゴリーを一意に追跡。categoriesはキーと値を持つためtags,categoryをループさせている -->
@@ -61,6 +61,7 @@ const submit = ()=> {
           </span>
         </div>
       </div>
+      <div v-if="form.errors.tags" class="text-red-600 text-sm mt-1">{{ form.errors.tags }}</div>
     </div>
 
     <form @submit.prevent="submit">

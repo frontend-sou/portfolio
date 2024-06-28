@@ -40,8 +40,9 @@ class PostController extends Controller
                 return back()->withErrors(['image' => '画像のアップロードに失敗しました: ' . $e->getMessage()]);
             }
         }
-        Tag::createTag($validated);
-        Post::createPost($validated);
+        // 投稿作成後、タグモデルにタグ配列のデータと投稿インスタンスを渡す→投稿後にpost_idを作れるようにするため
+        $post = Post::createPost($validated);
+        Tag::createTag($validated['tags'],$post);
 
         return Redirect::route('posts.index');
     }
@@ -50,7 +51,7 @@ class PostController extends Controller
     public function index()
     {
         // ページネーション実装したい
-        $posts = (new Post())->getPosts();
+        $posts = (new Post)->getPosts();
         return Inertia::render('Posts/Index', ['posts' => $posts]);
     }
     
@@ -59,17 +60,20 @@ class PostController extends Controller
         // findOrFailでデータが見つからないとき404httpレスポンスを返す
         $user = Auth::user();
         $userId = Auth::id();
-        $post = Post::findOrFail($id);
+        $post = Post::with('likes')->with('tags')->findOrFail($id);
+        $tags = $post->tags;
+
         // 認証ユーザーの有無→いたら投稿のいいねレコード、ユーザーID取得、存在したらtrue返す
         $liked = $user ? $post->likes()->where('user_id',$userId)->exists() : false;
 
-        return Inertia::render('Posts/Show', ['post' => $post,'liked' => $liked]);
+        return Inertia::render('Posts/Show', ['post' => $post,'liked' => $liked,'tags' => $tags]);
     }
 
     public function edit(string $id)
     {
-        $post = Post::findOrFail($id);
-        return Inertia::render('Posts/Edit',['post' => $post]);
+        $post = Post::with('tags')->findOrFail($id);
+        $tags = $post->tags;
+        return Inertia::render('Posts/Edit',['post' => $post,'tags' => $tags]);
     }
 
     public function update(PostRequest $request, string $id)
@@ -114,7 +118,7 @@ class PostController extends Controller
 
     // マイ投稿で認証ユーザーの投稿のみ表示(DBのN+1問題に注意、sql文で投稿一覧タブクリックした際にテーブルからユーザー投稿一覧データも取得？)
     public function myPostIndex(){
-        $myPosts = (new Post())->getMyPosts();
+        $myPosts = (new Post)->getMyPosts();
         return inertia::render('Posts/MyPost',['myPosts' => $myPosts]);
     }
 

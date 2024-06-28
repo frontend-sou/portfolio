@@ -10,6 +10,10 @@ const props = defineProps({
     liked:{
         type: Boolean,
         required: true,
+    },
+    tags:{
+        type: Array,
+        required: true,
     }
 });
 
@@ -78,12 +82,24 @@ const toggleClicked = () => {
                 </button>
             </div>
 
+            <!-- タグの表示 -->
+            <div class="p-5 flex">
+                <h3 class="text-xl font-semibold mb-2 mr-3">タグ:</h3>
+                <div class="flex flex-wrap gap-2">
+                    <span v-for="tag in tags" :key="tag.id"
+                        class="px-3 py-1 rounded-full bg-gray-200 text-gray-800">
+                      {{ tag.name }}
+                    </span>
+                </div>
+            </div>
+            
+            <!-- 本文の表示 -->
             <div class="p-5 flex flex-col sm:flex-row">
                 <img v-if="post.image_path" :src="post.image_path" alt="Post Image" class="rounded-lg max-w-lg md:w-1/2 sm:w-1/4 md:mr-4 md:mb-0 mb-4">
                 <h1 class="text-base md:text-lg">本文：{{ post.content }}</h1>
             </div>
-            
         </div>
+
         <div class="flex flex-col sm:flex-row items-center justify-center mt-5 space-y-2 sm:space-y-0 sm:space-x-2">
             <Link
                 :href="route('posts.edit', post.id)"

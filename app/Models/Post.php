@@ -31,7 +31,7 @@ class Post extends Model
 
     public function tags()
     {
-        return $this->belongsToMany(Tag::class);
+        return $this->belongsToMany(Tag::class,'post_tags','post_id','tag_id');
     }
 
     // Postモデルに新しいレコードを作成。$dataはフォームから送信されたデータを配列形式で取得
