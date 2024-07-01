@@ -29,6 +29,7 @@ class Post extends Model
         return $this->hasMany(Like::class);
     }
 
+    // 多対多
     public function tags()
     {
         return $this->belongsToMany(Tag::class,'post_tags','post_id','tag_id');

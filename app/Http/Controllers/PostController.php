@@ -48,11 +48,11 @@ class PostController extends Controller
     }
     
     // 投稿一覧ページにユーザーの投稿を参照
-    public function index()
+    public function index(Post $post)
     {
-        // ページネーション実装したい
         $posts = (new Post)->getPosts();
-        return Inertia::render('Posts/Index', ['posts' => $posts]);
+        $tags = $post->tags;
+        return Inertia::render('Posts/Index', ['posts' => $posts,'tags' => $tags]);
     }
     
     public function show(string $id)
@@ -100,6 +100,8 @@ class PostController extends Controller
         }
         // 投稿を更新
         $post->update($validated);
+        // タグも更新
+        Tag::createTag($validated['tags'],$post);
 
         return redirect()->route('posts.index');
     }
