@@ -48,10 +48,10 @@ class PostController extends Controller
     }
     
     // 投稿一覧ページにユーザーの投稿を参照
-    public function index(Post $post)
+    public function index()
     {
         $posts = (new Post)->getPosts();
-        $tags = $post->tags;
+        $tags = Tag::all();
         return Inertia::render('Posts/Index', ['posts' => $posts,'tags' => $tags]);
     }
     

@@ -14,7 +14,7 @@ class Post extends Model
     protected $fillable = ['user_id', 'title', 'content', 'image_path'];
     protected $orderBy = 'created_at';
     protected $direction = 'desc';
-    protected $perPage = 3;
+    protected $perPage = 9;
     
 
     // 各投稿は一人のユーザーに属する
@@ -69,7 +69,8 @@ class Post extends Model
     // 投稿情報のゲッター
     public function getPosts()
     {
-        return self::orderBy($this->orderBy, $this->direction)
+        return self::with('tags')
+        ->orderBy($this->orderBy, $this->direction)
         ->paginate($this->perPage);
     }
 

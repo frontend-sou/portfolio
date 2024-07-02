@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
             // 外部キー制約、usersテーブルのレコード削除に伴うポストの連鎖削除
-            $table->foreign('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('title', 50);
             $table->text('content');
-            $table->string('image_path', 255)->nullable();
+            $table->string('image_path', 255)->nullable(true);
             $table->timestamps();
         });
     }
