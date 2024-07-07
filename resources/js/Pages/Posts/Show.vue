@@ -57,8 +57,6 @@ const toggleClicked = () => {
   }
 };
 
-
-
 </script>
 
 <template>
@@ -96,7 +94,7 @@ const toggleClicked = () => {
             <!-- 本文の表示 -->
             <div class="p-5 flex flex-col sm:flex-row">
                 <img v-if="post.image_path" :src="post.image_path" alt="Post Image" class="rounded-lg max-w-lg md:w-1/2 sm:w-1/4 md:mr-4 md:mb-0 mb-4">
-                <h1 class="text-base md:text-lg">本文：{{ post.content }}</h1>
+                <h1 class="text-base md:text-lg">作り方：{{ post.content }}</h1>
             </div>
         </div>
 
