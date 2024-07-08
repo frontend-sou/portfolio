@@ -40,7 +40,7 @@ class PostsTableSeeder extends Seeder
         // ランダムな投稿データを30件作成
         for ($i = 0; $i < 30; $i++) {
             $postId = DB::table('posts')->insertGetId([
-                'user_id' => Arr::random($userIds), // ランダムなユーザーIDを割り当て
+                'user_id' => 21,
                 'title' => 'レシピタイトル' . ($i + 1),
                 'content' => 'これはおつまみレシピの内容です。' . ($i + 1),
                 'image_path' => 'https://cf-templates-118sny3ip1pf4-ap-northeast-1.s3.ap-northeast-1.amazonaws.com/posts/Yg8T3tGQX1AiwmdQSRS1uP7EEDkwO2Z3UV9c4FBG.jpg',
