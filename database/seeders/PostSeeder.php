@@ -14,7 +14,7 @@ class PostSeeder extends Seeder
     public function run(): void
     {
         DB::table('posts')->insert([
-            'user_id' => 1,
+            'user_id' => 21,
             'title' => 'Example Post',
             'content' => 'This is an example post content.',
             'image_path' => 'example.jpg',
