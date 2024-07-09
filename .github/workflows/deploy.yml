@@ -1,0 +1,28 @@
+name: Deploy to Heroku
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.3'
+    - name: Install dependencies
+      run: |
+        composer install --no-dev --prefer-dist --optimize-autoloader
+        npm install
+        npm run build
+    - name: Deploy to Heroku
+      uses: akhileshns/heroku-deploy@v3.12.12
+      with:
+        heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+        heroku_app_name: "souportfolio"
+        heroku_email: "shoonben10@gmail.com"
