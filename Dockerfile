@@ -1,48 +1,40 @@
-# ベースイメージの設定
+# ベースイメージとして公式PHPイメージを使用
 FROM php:8.3-fpm
 
-# 必要なビルド依存関係をインストール
+# 必要なライブラリをインストール
 RUN apt-get update && apt-get install -y \
     git \
     unzip \
+    libpq-dev \
     libpng-dev \
     libjpeg-dev \
     libfreetype6-dev \
-    locales \
-    zip \
-    jpegoptim optipng pngquant gifsicle \
-    vim \
-    curl \
-    libonig-dev \
     libzip-dev \
-    nodejs \
-    npm \
-    apache2 \
-    libapache2-mod-php8.3 && \
-    docker-php-ext-install pdo_mysql
-
-# Dockerコンテナの作業ディレクトリを設定
-WORKDIR /var/www/html
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install pdo pdo_mysql zip gd
 
 # Composerのインストール
-COPY --from=composer:2.0 /usr/bin/composer /usr/bin/composer
+COPY --from=composer:2.1 /usr/bin/composer /usr/bin/composer
 
-# アプリケーションのコピー
+# 作業ディレクトリを設定
+WORKDIR /var/www/html
+
+# アプリケーションコードをコピー
 COPY . .
 
-# Composerを使用してPHP依存関係をインストール
+# Composerで依存関係をインストール
 RUN composer install --no-dev --optimize-autoloader
 
-# npmを使用してフロントエンド依存関係をインストール
-RUN npm install && npm run prod
+# NPMでフロントエンド依存関係をインストール
+RUN npm install && npm run build
 
-# Apacheの設定
-RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
-COPY .docker/vhost.conf /etc/apache2/sites-available/000-default.conf
-RUN a2enmod rewrite
+# Laravelの設定
+RUN php artisan config:cache \
+    && php artisan route:cache \
+    && php artisan view:cache
 
-# ポート80を公開
-EXPOSE 80
+# ポートを公開
+EXPOSE 9000
 
-# サービスの起動コマンドを設定
-CMD ["apache2-foreground"]
+# コンテナ起動時のコマンドを設定
+CMD ["php-fpm"]
