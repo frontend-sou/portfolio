@@ -24,7 +24,7 @@ jobs:
 
     - name: Build, tag, and push the Docker image to the Heroku registry
       run: |
-        docker buildx build --platform linux/amd64 -f ./vendor/laravel/sail/runtimes/8.3/Dockerfile . -t registry.heroku.com/souportfolio/web --push
+        docker buildx build --platform linux/amd64 -f Dockerfile . -t registry.heroku.com/souportfolio/web --push
 
     - name: Release the Heroku app
       env:
