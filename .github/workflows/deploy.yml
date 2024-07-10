@@ -3,26 +3,43 @@ name: Deploy to Heroku
 on:
   push:
     branches:
-      - main
+      - main  # 本番デプロイはmainブランチにpushされたとき
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up PHP
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: '8.3'
-    - name: Install dependencies
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+
+    - name: Log in to the Heroku container registry
+      env:
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
       run: |
-        composer install --no-dev --prefer-dist --optimize-autoloader
-        npm install
-        npm run build
-    - name: Deploy to Heroku
-      uses: akhileshns/heroku-deploy@v3.12.12
-      with:
-        heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-        heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
-        heroku_email: ${{ secrets.HEROKU_EMAIL }}
+        echo $HEROKU_API_KEY | docker login --username=_ --password-stdin registry.heroku.com
+
+    - name: Build, tag, and push the Docker image to the Heroku registry
+      run: |
+        docker buildx build --platform linux/amd64 -f /production/Dockerfile . -t registry.heroku.com/souportfolio/web
+        docker push registry.heroku.com/souportfolio/web
+
+    - name: Release the Heroku app
+      env:
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+      run: |
+        curl -n -X PATCH https://api.heroku.com/apps/souportfolio/formation \
+        -d '{
+          "updates": [
+            {
+              "type": "web",
+              "docker_image": "'$(docker inspect registry.heroku.com/souportfolio/web:latest --format={{.Id}})'"
+            }
+          ]
+        }' \
+        -H "Content-Type: application/json" \
+        -H "Accept: application/vnd.heroku+json; version=3.docker-releases" \
+        -H "Authorization: Bearer $HEROKU_API_KEY"
