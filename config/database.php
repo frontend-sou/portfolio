@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Str;
 
-return [
+$db_config = [
 
     /*
     |--------------------------------------------------------------------------
@@ -168,3 +168,7 @@ return [
     ],
 
 ];
+
+// dd($db_config);
+
+return $db_config;

@@ -1,5 +1,5 @@
 # ベースイメージとして公式PHPイメージを使用
-FROM php:8.3-fpm
+FROM php:8.3-fpm AS runner
 
 # 必要なライブラリをインストール
 RUN apt-get update && apt-get install -y \
@@ -23,7 +23,11 @@ WORKDIR /var/www/html
 COPY . .
 
 # Composerで依存関係をインストール
-RUN composer install --no-dev --optimize-autoloader
+RUN composer install --no-dev --optimize-autoloader --ignore-platform-reqs
+
+# Install nodejs
+COPY --from=node:20-slim /usr/local/bin /usr/local/bin
+COPY --from=node:20-slim /usr/local/lib/node_modules /usr/local/lib/node_modules
 
 # NPMでフロントエンド依存関係をインストール
 RUN npm install && npm run build
@@ -33,8 +37,23 @@ RUN php artisan config:cache \
     && php artisan route:cache \
     && php artisan view:cache
 
+# Nginxステージ
+RUN apt install nginx -y
+
+# Nginxの設定をコピー
+COPY nginx.conf /etc/nginx/nginx.conf
+
 # ポートを公開
-EXPOSE 9000
+EXPOSE 80
+
+RUN chown -R www-data:www-data /var/www/html
+# RUN chown www-data:www-data /var/www/html/storage
+# RUN chown www-data:www-data /var/www/html/bootstrap/cache
+
+COPY docker-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
 # コンテナ起動時のコマンドを設定
-CMD ["php-fpm"]
+# CMD ["nginx", "-g", "daemon off;"]
+ENTRYPOINT [ "docker-entrypoint.sh" ]
+# CMD ["php-fpm", "daemonize"]
