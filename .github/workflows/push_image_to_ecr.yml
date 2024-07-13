@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      ECR_REPOSITORY: ${{ github.event.inputs.target-env }}-souharu-prod
+      ECR_REPOSITORY: ${{ github.event.inputs.target-env }}-souharu
       IMAGE_TAG: ${{ github.sha }}
 
     steps:
