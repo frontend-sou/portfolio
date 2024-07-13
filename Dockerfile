@@ -33,9 +33,9 @@ COPY --from=node:20-slim /usr/local/lib/node_modules /usr/local/lib/node_modules
 RUN npm install && npm run build
 
 # Laravelの設定
-RUN php artisan config:cache \
-    && php artisan route:cache \
-    && php artisan view:cache
+# RUN php artisan config:cache \
+#     && php artisan route:cache \
+#     && php artisan view:cache
 
 # Nginxステージ
 RUN apt install nginx -y
@@ -47,8 +47,6 @@ COPY nginx.conf /etc/nginx/nginx.conf
 EXPOSE 80
 
 RUN chown -R www-data:www-data /var/www/html
-# RUN chown www-data:www-data /var/www/html/storage
-# RUN chown www-data:www-data /var/www/html/bootstrap/cache
 
 COPY docker-entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
