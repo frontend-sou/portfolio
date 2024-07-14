@@ -10,29 +10,32 @@
 
 ## サービス概要
 
-HayabusaTripは、「旅の準備をもっとシンプルにしたい！」という想いから作られた、無料の旅行プラン共有サービスです。
+ツマミソウは、「お酒に合うおつまみを探して晩酌を楽しみたい！」という想いから作られた、無料のおつまみレシピ共有サービスです。
 
-わずか3ステップで旅行プランを共有できる直感的なUIで、ユーザーの面倒な旅行の準備をサポートします。
+・お酒のつまみはコンビニで済ませているが、段々飽きてきた
+・お酒をより美味しく感じるためにおつまみのレパートリーを増やしたい
+
+というような要望に応えるべく、レシピ投稿から検索まで簡単ステップでサービスをお使いいただけます。
 
 ### ▼ サービスURL
 
-https://www.hayabusatrip.com
 
-レスポンシブ対応済のため、PCでもスマートフォンでも快適にご利用いただけます。
+
+レスポンシブ対応済のため、PCでもスマートフォンでもご利用いただけます。
 
 ## メイン機能の使い方
 
 <table>
   <tr>
-     <th style="text-align: center">旅行プラン作成</th>
-    <th style="text-align: center">旅行スポット追加</th>
-    <th style="text-align: center">旅行プラン公開</th>
+     <th style="text-align: center">おつまみレシピ作成</th>
+    <th style="text-align: center">タグ、タイトル、本文、写真のアップロード</th>
+    <th style="text-align: center">おつまみレシピ公開</th>
   </tr>
-  <tr>
+<!--   <tr>
     <td><img src="https://raw.githubusercontent.com/keynyaan/hayabusatrip-frontend/main/public/images/demo/create-trip.gif" alt="旅行プラン作成" />まずは、旅行プラン作成ボタンを押して、各旅行情報を記入後に作成ボタンを押す。</td>
     <td><img src="https://raw.githubusercontent.com/keynyaan/hayabusatrip-frontend/main/public/images/demo/add-spot.gif" alt="旅行スポット追加" />次に、スポット追加ボタンを押して、各スポット情報を記入後に追加ボタンを押す。</td>
     <td><img src="https://raw.githubusercontent.com/keynyaan/hayabusatrip-frontend/main/public/images/demo/publish-settings.gif" alt="旅行プラン公開" />最後に、三点リーダーから公開状態の変更ボタンを押して、公開に変更したら完了！</td>
-  </tr>
+  </tr> -->
 </table>
 
 ## 使用技術一覧
