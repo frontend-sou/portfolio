@@ -37,12 +37,12 @@ https://www.hayabusatrip.com
 
 ## 使用技術一覧
 
-**バックエンド:** Ruby 3.2.2 / Rails 7.0.7.2
+**バックエンド:** PHP 8.2 / Laravel 11.0
 
 - コード解析 / フォーマッター: Rubocop
 - テストフレームワーク: RSpec
 
-**フロントエンド:** TypeScript 5.0.2 / React 18.2.0 / Next.js 13.2.4
+**フロントエンド:** Vue.js
 
 - コード解析: ESLint
 - フォーマッター: Prettier
