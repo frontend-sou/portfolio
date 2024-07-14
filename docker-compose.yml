@@ -20,8 +20,8 @@ services:
       - DB_PASSWORD=${DB_PASSWORD}
     ports:
       - 9000:80
-    # volumes:
-    #   - .:/var/www/html
+    volumes:
+      - .:/var/www/html
     networks:
       - app-network
     depends_on:
