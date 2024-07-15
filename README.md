@@ -1,4 +1,4 @@
-# Tsumami-sou / お酒のおつまみレシピ共有サービス
+# ツマミソウ / お酒のおつまみレシピ共有サービス
 <ul style="flex">
     <img src="public/images/readme.png" alt="readme" />
     <img src="https://img.shields.io/badge/-PHP-777BB4.svg?logo=php&style=plastic">
