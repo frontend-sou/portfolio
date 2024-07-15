@@ -6,12 +6,10 @@ on:
       target-env:
         description: "Environment"
         required: true
-        default: "dev"
+        default: "prod"
         type: choice
         options:
-          - dev
           - prod
-          - stg
 
 jobs:
   deploy_app:
