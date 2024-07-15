@@ -1,6 +1,6 @@
 # Tsumami-sou / お酒のおつまみレシピ共有サービス
 
-![service-image](https://raw.githubusercontent.com/frontend-sou/portfolio/public/images/readme.png)
+<img src="https://raw.githubusercontent.com/frontend-sou/portfolio/public/images/readme.png" alt="readme" />
 <img src="https://img.shields.io/badge/-PHP-777BB4.svg?logo=php&style=plastic">
 <img src="https://img.shields.io/badge/-Laravel-E74430.svg?logo=laravel&style=plastic">
 <img src="https://img.shields.io/badge/-Vue.js-4FC08D.svg?logo=vue.js&style=plastic">
