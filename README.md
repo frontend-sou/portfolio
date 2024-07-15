@@ -1,18 +1,18 @@
 # Tsumami-sou / お酒のおつまみレシピ共有サービス
-
-<img src="https://raw.githubusercontent.com/frontend-sou/portfolio/public/images/readme.png" alt="readme" />
-<img src="https://img.shields.io/badge/-PHP-777BB4.svg?logo=php&style=plastic">
-<img src="https://img.shields.io/badge/-Laravel-E74430.svg?logo=laravel&style=plastic">
-<img src="https://img.shields.io/badge/-Vue.js-4FC08D.svg?logo=vue.js&style=plastic">
-<img src="https://img.shields.io/badge/-Docker-1488C6.svg?logo=docker&style=plastic">
-<img src="https://img.shields.io/badge/-Amazon%20AWS-232F3E.svg?logo=amazon-aws&style=plastic">
-[![Thanks](https://img.shields.io/badge/Thank%20you-for%20visiting-00aab9)](https://www.hayabusatrip.com)
+<ul style="flex">
+    <img src="public/images/readme.png" alt="readme" />
+    <img src="https://img.shields.io/badge/-PHP-777BB4.svg?logo=php&style=plastic">
+    <img src="https://img.shields.io/badge/-Laravel-E74430.svg?logo=laravel&style=plastic">
+    <img src="https://img.shields.io/badge/-Vue.js-4FC08D.svg?logo=vue.js&style=plastic">
+    <img src="https://img.shields.io/badge/-Docker-1488C6.svg?logo=docker&style=plastic">
+    <img src="https://img.shields.io/badge/-Amazon%20AWS-232F3E.svg?logo=amazon-aws&style=plastic">
+</ul>
 
 ## サービス概要
 
 ツマミソウは、「お酒に合うおつまみを探して晩酌を楽しみたい！」という想いから作られた、無料のおつまみレシピ共有サービスです。
 
-・お酒のつまみはコンビニで済ませているが、段々飽きてきた
+・お酒のつまみはコンビニで済ませているが、段々飽きてきた<br>
 ・お酒をより美味しく感じるためにおつまみのレパートリーを増やしたい
 
 というような要望に応えるべく、レシピ投稿から検索まで簡単ステップでサービスをお使いいただけます。
@@ -42,24 +42,18 @@
 
 **バックエンド:** PHP 8.2 / Laravel 11.0
 
-- コード解析 / フォーマッター: Rubocop
-- テストフレームワーク: RSpec
-
 **フロントエンド:** Vue.js
-
-- コード解析: ESLint
 - フォーマッター: Prettier
-- テストフレームワーク: Jest / React Testing Library
 - CSSフレームワーク: Tailwind CSS
-- 主要パッケージ: Axios / Font Awesome / React Paginate / React Responsive Modal / React Toastify
+- 主要パッケージ: 
 
-**インフラ:** AWS(Route53 / Certificate Manager / ALB / VPC / ECR / ECS Fargate / RDS MySQL / S3) / Nginx / Vercel
+**インフラ:** AWS(Route53 / Certificate Manager / ALB / VPC / ECR / ECS Fargate / RDS MySQL / S3) / Nginx 
 
 **CI / CD:** GitHub Actions
 
 **環境構築:** Docker / Docker Compose
 
-**認証:** Laravel
+**認証:** Laravel Breeze
 
 ## 主要対応一覧
 
@@ -98,12 +92,6 @@
 - Dockerによる開発環境のコンテナ化
 - Route53による独自ドメイン + SSL化
 - GitHub ActionsによるCI / CDパイプラインの構築
-  - バックエンド
-    - CI: Rubocop / RSpec
-    - CD: AWS ECS
-  - フロントエンド
-    - CI: ESLint / Prettier / Jest / Codecov
-    - CD: Vercel
 
 #### テスト / セキュリティ
 
