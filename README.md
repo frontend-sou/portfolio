@@ -106,13 +106,13 @@ https://tsumami-sou.com
 
 ## インフラ構成図
 
-![er-diagram](https://raw.githubusercontent.com/keynyaan/hayabusatrip-frontend/main/public/images/diagrams/er-diagram.png)
+<img src="public/images/インフラ構成図.png" alt="infra" />
 
 ## ER図
 
-![infrastructure-diagram](https://raw.githubusercontent.com/frontend-sou/portfolio/draw.io)
+<img src="public/images/ER.png" alt="ER" />
 
 
 ## 画面遷移図
 
-[Figma\_画面遷移図](https://www.figma.com/file/1OgxVeGaDw9riHGzxyGoLG/%E7%94%BB%E9%9D%A2%E9%81%B7%E7%A7%BB%E5%9B%B3_HayabusaTrip?type=design&node-id=0-1&mode=design)
+
