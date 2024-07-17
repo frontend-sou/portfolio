@@ -1,6 +1,7 @@
 <script setup>
 import { Head, Link, useForm } from "@inertiajs/vue3";
 import { ref } from "vue";
+import { getImagePath } from "../../Utils";
 
 const props = defineProps({
     post: {
@@ -55,10 +56,6 @@ const toggleClicked = () => {
             },
         });
     }
-};
-
-const getImagePath = (imagePath) => {
-    return "/image" + imagePath;
 };
 </script>
 
