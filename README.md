@@ -23,13 +23,14 @@ https://tsumami-sou.com
 
 レスポンシブ対応済のため、PCでもスマートフォンでもご利用いただけます。
 
-## メイン機能の使い方
+## メイン機能
 
 <table>
   <tr>
      <th style="text-align: center">おつまみレシピ作成</th>
     <th style="text-align: center">タグ、タイトル、本文、写真のアップロード</th>
     <th style="text-align: center">おつまみレシピ公開</th>
+    <th style="text-align: center">投稿のタグ、クエリ検索</th>
   </tr>
 <!--   <tr>
     <td><img src="https://raw.githubusercontent.com/frontend-sou/portfolio/public/images/readme.png" alt="旅行プラン作成" />まずは、旅行プラン作成ボタンを押して、各旅行情報を記入後に作成ボタンを押す。</td>
@@ -41,19 +42,21 @@ https://tsumami-sou.com
 ## 使用技術一覧
 
 **バックエンド:** PHP 8.2 / Laravel 11.0
-
-**フロントエンド:** Vue.js
-- フォーマッター: Prettier
+- 認証機能: Laravel Breeze
+- 主要パッケージ: laravel-lang / league/flysystem / ziggy
+  
+**フロントエンド:** Vue3
 - CSSフレームワーク: Tailwind CSS
-- 主要パッケージ: 
+- 主要パッケージ: inertia / vue-router
+
+**エディター:** VSCode
+- 拡張機能: Path intellisense / bracket-pair-colorizer-2 / Git / code-spell-checker
 
 **インフラ:** AWS(Route53 / Certificate Manager / ALB / VPC / ECR / ECS Fargate / RDS MySQL / S3) / Nginx 
 
 **CI / CD:** GitHub Actions
 
 **環境構築:** Docker / Docker Compose
-
-**認証:** Laravel Breeze
 
 ## 主要対応一覧
 
