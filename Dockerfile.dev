@@ -20,17 +20,12 @@ COPY --from=composer:2.1 /usr/bin/composer /usr/bin/composer
 WORKDIR /var/www/html
 
 # アプリケーションコードをコピー
-COPY . .
 
 # Composerで依存関係をインストール
-RUN composer install --no-dev --optimize-autoloader --ignore-platform-reqs
 
 # Install nodejs
 COPY --from=node:20-slim /usr/local/bin /usr/local/bin
 COPY --from=node:20-slim /usr/local/lib/node_modules /usr/local/lib/node_modules
-
-# NPMでフロントエンド依存関係をインストール
-RUN npm install && npm run build
 
 # Laravelの設定
 # RUN php artisan config:cache \
@@ -46,9 +41,7 @@ COPY nginx.conf /etc/nginx/nginx.conf
 # ポートを公開
 EXPOSE 80
 
-RUN chown -R www-data:www-data /var/www/html
-
-COPY docker-entrypoint.sh /usr/local/bin/
+COPY docker-entrypoint.dev.sh /usr/local/bin/docker-entrypoint.sh
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
 # コンテナ起動時のコマンドを設定
