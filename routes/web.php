@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HealthCheckController;
+use App\Http\Controllers\ImageController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\ProfileController;
@@ -32,6 +33,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/like', [LikeController::class, 'index'])->name('like');
     Route::post('/posts/{post}/like', [LikeController::class, 'store'])->name('like.store');
     Route::delete('/posts/{post}/like', [LikeController::class, 'destroy'])->name('like.destroy');
+
+    Route::get('/image/{image_key}', [ImageController::class, 'show'])->where('image_key', '.*');
 });
 
 Route::get('/health', [HealthCheckController::class, 'check']);
