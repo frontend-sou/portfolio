@@ -84,10 +84,13 @@ class PostController extends Controller
         // 画像がアップロードされた場合の処理
         if ($request->hasFile('image')) {
             try {
-                // DBに登録されているパスはフルパス。s3のimage名(basename)も削除処理
-                $image = basename($post->image_path);
-                Storage::disk('s3')->delete($this->diskImageFolder.'/'.$image);
-                Storage::disk('s3')->delete($post->image_path);
+                // 画像が空じゃない場合は先に削除処理
+                if(!empty($post->image_path)){
+                    // DBに登録されているパスはフルパス。s3のimage名(basename)も削除処理
+                    $image = basename($post->image_path);
+                    Storage::disk('s3')->delete($this->diskImageFolder.'/'.$image);
+                    Storage::disk('s3')->delete($post->image_path);
+                }
                 // 新しい画像をアップロード
                 $imagePath = $request->file('image')->store($this->diskImageFolder, 's3');
                 $s3Url = Config::get('filesystems.disks.s3.url');
