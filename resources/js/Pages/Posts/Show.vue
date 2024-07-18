@@ -4,6 +4,10 @@ import { ref } from "vue";
 import { getImagePath } from "../../Utils";
 
 const props = defineProps({
+    user: {
+        type: Object,
+        required: true,
+    },
     post: {
         type: Object,
         required: true,
@@ -123,7 +127,9 @@ const toggleClicked = () => {
             </div>
         </div>
 
+        <!-- 投稿者だけが表示できる編集・削除ボタン -->
         <div
+            v-if="user.id === post.user_id"
             class="flex flex-col sm:flex-row items-center justify-center mt-5 space-y-2 sm:space-y-0 sm:space-x-2"
         >
             <Link

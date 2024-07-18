@@ -66,7 +66,7 @@ class PostController extends Controller
         // 認証ユーザーの有無→いたら投稿のいいねレコード、ユーザーID取得、存在したらtrue返す
         $liked = $user ? $post->likes()->where('user_id',$userId)->exists() : false;
 
-        return Inertia::render('Posts/Show', ['post' => $post,'liked' => $liked,'tags' => $tags]);
+        return Inertia::render('Posts/Show', ['user' => $user,'post' => $post,'liked' => $liked,'tags' => $tags]);
     }
 
     public function edit(string $id)
